@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Varsha Jagdale</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;300;400;600&display=swap" rel="stylesheet">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+  <style>
+
+    body, TT, tt, h4, p, a {
+      font-family: 'Source Code Pro', monospace;
+    }
+
+    .row.equal-height { display: flex; align-items: stretch; }
+    .row.equal-height .columns { float: none; }
+    .col-left  { padding-right: 4%; }
+    .col-right {
+      border-left: 1px solid #e0e0e0; padding-left: 4%;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    h4 { font-weight: 600; letter-spacing: 0.02em; }
+    .col-left TT p { font-weight: 200; line-height: 1.85; }
+    .col-left TT p:last-child { font-weight: 200; color: inherit; }
+    .col-right TT p { font-weight: 300; line-height: 1.9; }
+    .col-right TT a { font-weight: 200; }
+
+    /* ── Animation 2: Looping Breath ─────────────────────
+       The dandelion breathes — seeds float out slowly,
+       then gently fade back in, endlessly cycling.
+       Each seed has its own offset so they go one by one.
+       The whole loop takes ~12s per cycle.
+    ──────────────────────────────────────────────────── */
+
+    .dandelion-stage {
+      position: fixed;
+      top: 0; right: 0;
+      width: 280px; height: 320px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .variation-label {
+      position: fixed;
+      bottom: 20px; right: 20px;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 10px;
+      font-weight: 300;
+      color: #bbb;
+      letter-spacing: 0.08em;
+      z-index: 10;
+    }
+
+    /*
+      Each seed loops: sits still → drifts out + fades → invisible pause → fades back in → sits still
+      Keyframe breakdown over 12s:
+        0–10%    visible, still
+        10–45%   drifts and fades out
+        45–80%   invisible
+        80–95%   fades back in at origin
+        95–100%  visible, still (rejoins globe)
+    */
+
+    @keyframes breathe1 {
+      0%,8%   { transform: translate(0,0) rotate(0deg);   opacity: 0.7; }
+      42%     { transform: translate(-58px,-98px) rotate(-28deg); opacity: 0; }
+      78%     { transform: translate(0,0) rotate(0deg);   opacity: 0; }
+      93%,100%{ transform: translate(0,0) rotate(0deg);   opacity: 0.7; }
+    }
+    @keyframes breathe2 {
+      0%,8%   { transform: translate(0,0) rotate(0deg);   opacity: 0.65; }
+      42%     { transform: translate(-28px,-115px) rotate(18deg); opacity: 0; }
+      78%     { transform: translate(0,0) rotate(0deg);   opacity: 0; }
+      93%,100%{ transform: translate(0,0) rotate(0deg);   opacity: 0.65; }
+    }
+    @keyframes breathe3 {
+      0%,8%   { transform: translate(0,0) rotate(0deg);   opacity: 0.7; }
+      42%     { transform: translate(22px,-100px) rotate(-12deg); opacity: 0; }
+      78%     { transform: translate(0,0) rotate(0deg);   opacity: 0; }
+      93%,100%{ transform: translate(0,0) rotate(0deg);   opacity: 0.7; }
+    }
+    @keyframes breathe4 {
+      0%,8%   { transform: translate(0,0) rotate(0deg);   opacity: 0.6; }
+      42%     { transform: translate(55px,-82px) rotate(22deg);  opacity: 0; }
+      78%     { transform: translate(0,0) rotate(0deg);   opacity: 0; }
+      93%,100%{ transform: translate(0,0) rotate(0deg);   opacity: 0.6; }
+    }
+    @keyframes breathe5 {
+      0%,8%   { transform: translate(0,0) rotate(0deg);   opacity: 0.6; }
+      42%     { transform: translate(75px,-45px) rotate(-18deg); opacity: 0; }
+      78%     { transform: translate(0,0) rotate(0deg);   opacity: 0; }
+      93%,100%{ transform: translate(0,0) rotate(0deg);   opacity: 0.6; }
+    }
+    @keyframes breathe6 {
+      0%,8%   { transform: translate(0,0) rotate(0deg);   opacity: 0.55; }
+      42%     { transform: translate(-75px,-52px) rotate(-32deg); opacity: 0; }
+      78%     { transform: translate(0,0) rotate(0deg);   opacity: 0; }
+      93%,100%{ transform: translate(0,0) rotate(0deg);   opacity: 0.55; }
+    }
+    @keyframes breathe7 {
+      0%,8%   { transform: translate(0,0) rotate(0deg);   opacity: 0.5; }
+      42%     { transform: translate(38px,-118px) rotate(8deg);  opacity: 0; }
+      78%     { transform: translate(0,0) rotate(0deg);   opacity: 0; }
+      93%,100%{ transform: translate(0,0) rotate(0deg);   opacity: 0.5; }
+    }
+    @keyframes breathe8 {
+      0%,8%   { transform: translate(0,0) rotate(0deg);   opacity: 0.55; }
+      42%     { transform: translate(-40px,-118px) rotate(-8deg); opacity: 0; }
+      78%     { transform: translate(0,0) rotate(0deg);   opacity: 0; }
+      93%,100%{ transform: translate(0,0) rotate(0deg);   opacity: 0.55; }
+    }
+
+    /* Stagger each seed's start time so they leave one by one */
+    .b1 { animation: breathe1 12s 0s    infinite ease-in-out; transform-origin: 140px 168px; }
+    .b2 { animation: breathe2 12s 1.2s  infinite ease-in-out; transform-origin: 140px 168px; }
+    .b3 { animation: breathe3 12s 2.1s  infinite ease-in-out; transform-origin: 140px 168px; }
+    .b4 { animation: breathe4 12s 2.9s  infinite ease-in-out; transform-origin: 140px 168px; }
+    .b5 { animation: breathe5 12s 3.8s  infinite ease-in-out; transform-origin: 140px 168px; }
+    .b6 { animation: breathe6 12s 4.6s  infinite ease-in-out; transform-origin: 140px 168px; }
+    .b7 { animation: breathe7 12s 5.5s  infinite ease-in-out; transform-origin: 140px 168px; }
+    .b8 { animation: breathe8 12s 6.2s  infinite ease-in-out; transform-origin: 140px 168px; }
+
+    /* Stem breathes very gently with the whole cycle */
+    @keyframes stemBreathe {
+      0%,100% { transform: rotate(0deg); }
+      25%     { transform: rotate(0.8deg); }
+      65%     { transform: rotate(-0.5deg); }
+    }
+    .stem-breathe {
+      animation: stemBreathe 12s ease-in-out infinite;
+      transform-origin: 148px 318px;
+    }
+
+  </style>
+
+</head>
+<body>
+
+  <div class="variation-label">// anim-2 &nbsp; looping breath &nbsp; seeds go, return, go again</div>
+
+  <!-- ── Dandelion ── -->
+  <svg class="dandelion-stage" viewBox="0 0 280 320" xmlns="http://www.w3.org/2000/svg">
+
+    <g class="stem-breathe">
+      <path d="M 148 318 Q 152 250 140 168" stroke="#b0a890" stroke-width="1.2"
+            fill="none" stroke-opacity="0.55" stroke-linecap="round"/>
+    </g>
+
+    <!-- Static seeds that never leave — anchoring the globe -->
+    <g stroke="#a89e84" stroke-linecap="round" fill="none" opacity="0.72">
+
+      <path d="M 140 168 Q 162 178 178 188" stroke-width="0.85" stroke-opacity="0.62"/>
+      <line x1="178" y1="188" x2="185" y2="183" stroke-width="0.5" stroke-opacity="0.42"/>
+      <line x1="178" y1="188" x2="186" y2="190" stroke-width="0.5" stroke-opacity="0.42"/>
+      <line x1="178" y1="188" x2="182" y2="196" stroke-width="0.5" stroke-opacity="0.42"/>
+
+      <path d="M 140 168 Q 118 178 102 188" stroke-width="0.85" stroke-opacity="0.62"/>
+      <line x1="102" y1="188" x2="95" y2="183" stroke-width="0.5" stroke-opacity="0.42"/>
+      <line x1="102" y1="188" x2="94" y2="190" stroke-width="0.5" stroke-opacity="0.42"/>
+      <line x1="102" y1="188" x2="98" y2="196" stroke-width="0.5" stroke-opacity="0.42"/>
+
+      <path d="M 140 168 Q 166 162 184 156" stroke-width="0.85" stroke-opacity="0.62"/>
+      <line x1="184" y1="156" x2="192" y2="151" stroke-width="0.5" stroke-opacity="0.42"/>
+      <line x1="184" y1="156" x2="193" y2="157" stroke-width="0.5" stroke-opacity="0.42"/>
+      <line x1="184" y1="156" x2="190" y2="163" stroke-width="0.5" stroke-opacity="0.42"/>
+
+      <path d="M 140 168 Q 114 162 96 156" stroke-width="0.85" stroke-opacity="0.62"/>
+      <line x1="96" y1="156" x2="88" y2="151" stroke-width="0.5" stroke-opacity="0.42"/>
+      <line x1="96" y1="156" x2="87" y2="157" stroke-width="0.5" stroke-opacity="0.42"/>
+      <line x1="96" y1="156" x2="90" y2="163" stroke-width="0.5" stroke-opacity="0.42"/>
+
+      <path d="M 140 168 Q 140 190 140 206" stroke-width="0.85" stroke-opacity="0.58"/>
+      <line x1="140" y1="206" x2="134" y2="214" stroke-width="0.5" stroke-opacity="0.38"/>
+      <line x1="140" y1="206" x2="140" y2="215" stroke-width="0.5" stroke-opacity="0.38"/>
+      <line x1="140" y1="206" x2="146" y2="214" stroke-width="0.5" stroke-opacity="0.38"/>
+
+    </g>
+
+    <!-- Breathing seeds — loop in and out -->
+
+    <g class="b1">
+      <path d="M 140 168 Q 118 138 106 112" stroke="#a89e84" stroke-width="0.8"
+            fill="none" stroke-opacity="0.6" stroke-linecap="round"/>
+      <line x1="106" y1="112" x2="99" y2="104" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="106" y1="112" x2="103" y2="103" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="106" y1="112" x2="112" y2="105" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.4"/>
+    </g>
+
+    <g class="b2">
+      <path d="M 140 168 Q 136 132 134 106" stroke="#a89e84" stroke-width="0.8"
+            fill="none" stroke-opacity="0.6" stroke-linecap="round"/>
+      <line x1="134" y1="106" x2="128" y2="97" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="134" y1="106" x2="134" y2="96" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="134" y1="106" x2="140" y2="98" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.4"/>
+    </g>
+
+    <g class="b3">
+      <path d="M 140 168 Q 156 134 166 108" stroke="#a89e84" stroke-width="0.8"
+            fill="none" stroke-opacity="0.6" stroke-linecap="round"/>
+      <line x1="166" y1="108" x2="173" y2="100" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="166" y1="108" x2="167" y2="99" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="166" y1="108" x2="172" y2="108" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.4"/>
+    </g>
+
+    <g class="b4">
+      <path d="M 140 168 Q 170 148 190 132" stroke="#a89e84" stroke-width="0.8"
+            fill="none" stroke-opacity="0.55" stroke-linecap="round"/>
+      <line x1="190" y1="132" x2="198" y2="126" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.38"/>
+      <line x1="190" y1="132" x2="199" y2="133" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.38"/>
+      <line x1="190" y1="132" x2="196" y2="140" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.38"/>
+    </g>
+
+    <g class="b5">
+      <path d="M 140 168 Q 110 148 90 132" stroke="#a89e84" stroke-width="0.8"
+            fill="none" stroke-opacity="0.55" stroke-linecap="round"/>
+      <line x1="90" y1="132" x2="82" y2="126" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.38"/>
+      <line x1="90" y1="132" x2="81" y2="133" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.38"/>
+      <line x1="90" y1="132" x2="84" y2="140" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.38"/>
+    </g>
+
+    <g class="b6">
+      <path d="M 140 168 Q 116 148 104 130" stroke="#a89e84" stroke-width="0.8"
+            fill="none" stroke-opacity="0.55" stroke-linecap="round"/>
+      <line x1="104" y1="130" x2="97" y2="122" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.38"/>
+      <line x1="104" y1="130" x2="101" y2="121" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.38"/>
+      <line x1="104" y1="130" x2="110" y2="123" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.38"/>
+    </g>
+
+    <g class="b7">
+      <path d="M 140 168 Q 160 146 172 128" stroke="#a89e84" stroke-width="0.8"
+            fill="none" stroke-opacity="0.55" stroke-linecap="round"/>
+      <line x1="172" y1="128" x2="179" y2="120" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.38"/>
+      <line x1="172" y1="128" x2="173" y2="119" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.38"/>
+      <line x1="172" y1="128" x2="178" y2="128" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.38"/>
+    </g>
+
+    <g class="b8">
+      <path d="M 140 168 Q 125 136 118 112" stroke="#a89e84" stroke-width="0.75"
+            fill="none" stroke-opacity="0.5" stroke-linecap="round"/>
+      <line x1="118" y1="112" x2="111" y2="104" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.35"/>
+      <line x1="118" y1="112" x2="115" y2="103" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.35"/>
+      <line x1="118" y1="112" x2="123" y2="105" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.35"/>
+    </g>
+
+    <circle cx="140" cy="168" r="3" fill="#a89e84" opacity="0.5"/>
+
+  </svg>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container" style="position:relative; z-index:1;">
+    <div class="row equal-height">
+
+      <div class="seven columns col-left" style="margin-top: 10%">
+        <TT>
+          <h4>cd varsha/mind</h4>
+          <p>Hello world. You just browsed into my biological computer.</p>
+          <p>I move through the world chasing beauty — in ideas, in objects,
+          in the way light falls at the end of an afternoon. Professionally
+          I've wandered across computer engineering, product design, and
+          user research. Personally, just as many areas.</p>
+          <p>I'm moved by things that are soft and stubborn at once —
+          delicate enough to scatter in the wind, persistent enough to
+          grow through concrete. That's the kind of work I try to do.</p>
+          <p>When I'm not lost in the world looking for wonder, wisdom,
+          and wit, I come here to file my inspirations and creations.
+          Hope you find something that lands.</p>
+          <p>This site is dedicated to my first loves - writing and coding. Yep, it's an oxymoron.</p>
+        </TT>
+      </div>
+
+      <div class="five columns col-right">
+        <TT>
+          <h4>&nbsp;</h4>
+          <p>
+            cd professional <br>
+            <a href="caseStudies.html">/case studies</a><br>
+            <a href="articles.html">/articles and talks</a><br>
+            <a href="communityContributions.html">/community contributions</a><br>
+            <br>
+            cd ../personal <br>
+            <a href="prose.html">/prose</a><br>
+            <a href="poetry.html">/poetry</a><br>
+            <a href="watercolors.html">/watercolors</a><br>
+            <a href="photography.html">/photography</a><br>
+            <a href="digitalIllustrations.html">/digital illustrations</a><br>
+            <a href="handCrafted.html">/physical computing</a><br>
+            <a href="interiorDecor.html">/homely curation</a><br>
+            <a href="cooking.html">/cooking</a><br>
+            <a href="inspirations.html">/inspirations</a><br>
+            <br>
+          </p>
+        </TT>
+      </div>
+
+    </div>
+  </div>
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>

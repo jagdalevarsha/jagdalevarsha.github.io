@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Varsha Jagdale</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;300;400;600&display=swap" rel="stylesheet">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+  <style>
+
+    body, TT, tt, h4, p, a {
+      font-family: 'Source Code Pro', monospace;
+    }
+
+    .row.equal-height { display: flex; align-items: stretch; }
+    .row.equal-height .columns { float: none; }
+    .col-left  { padding-right: 4%; }
+    .col-right {
+      border-left: 1px solid #e0e0e0; padding-left: 4%;
+      display: flex; flex-direction: column; justify-content: flex-start;
+    }
+    h4 { font-weight: 600; letter-spacing: 0.02em; }
+    .col-left TT p { font-weight: 200; line-height: 1.85; }
+    .col-left TT p:last-child { font-weight: 200; color: inherit; }
+    .col-right TT p { font-weight: 300; line-height: 1.9; }
+    .col-right TT a { font-weight: 200; }
+
+    /* ── Inline dandelion ── */
+    .dandelion-inline {
+      display: block;
+      width: 260px;
+      height: 290px;
+      margin: 14px 0 8px 0;
+      overflow: visible;
+    }
+
+    /* Stem sways gently on hover */
+    @keyframes stemSway {
+      0%,100% { transform: rotate(0deg); }
+      25%     { transform: rotate(1.4deg); }
+      65%     { transform: rotate(-0.9deg); }
+    }
+    #dandelion-svg:hover .stem-sway {
+      animation: stemSway 2.8s ease-in-out infinite;
+    }
+    .stem-sway { transform-origin: 130px 258px; }
+
+    #dandelion-svg { cursor: default; overflow: visible; }
+
+  </style>
+
+</head>
+<body>
+
+  <div class="container" style="position:relative; z-index:1;">
+    <div class="row equal-height">
+
+      <div class="seven columns col-left" style="margin-top: 10%">
+        <TT>
+
+          <h4>cd varsha/mind</h4>
+
+          <p>Hello world.</p>
+
+          <p>You just browsed into my biological computer.</p>
+
+          <p>If there is one thing I want you to know about me, it's this: I move through
+          the world in awe of its beauty and creativity. Beauty that runs deep. Creativity
+          that makes each moment unfold.</p>
+
+          <p>Beauty lives in the totality of any being's being — not in some artistic ideal,
+          but in grounded, ordinary reality. Take the dandelion. So many dimensions on display
+          at once. Its interconnection with soil, sun, wind, and bees. Its ethereal aesthetics.
+          How it reads context cleverly — arriving early spring before other flowers to maximize
+          the chances of seed dispersal, reciprocating with nectar. Its strategic execution:
+          young, it holds the root firmly; old, it surrenders gracefully. Its impact on people —
+          some call it a weed, some make a wish. And how it solves the problem of continuity
+          by leveraging empty space in a parachute and trusting the wind.</p>
+
+          <p>These values — of interconnection, systemic thinking, strategic execution, design,
+          and contextual problem solving — are approaches I try to embody in both professional
+          and personal life. The awe inspires the creativity, and the creativity moves me to
+          make things. On the right, you'll find some of what that has produced.</p>
+
+          <p>Like the dandelion, I think of this as sending out idea-parachutes into the world,
+          trusting they'll land where they need to. Maybe something transforms — a new thought,
+          a new creation, a new connection.</p>
+
+          <p>Now the fun part: it's your turn to make a wish. While we wait for AI to simulate
+          a good breath, let's go old school — use your cursor.</p>
+
+          <!-- ── Inline dandelion ── -->
+          <svg id="dandelion-svg" class="dandelion-inline"
+               viewBox="0 0 260 290" xmlns="http://www.w3.org/2000/svg">
+
+            <!-- Stem — green, prominent -->
+            <g class="stem-sway">
+              <path d="M 133 280 Q 136 230 130 148"
+                    stroke="#7aaa5a" stroke-width="2.8" fill="none"
+                    stroke-opacity="0.85" stroke-linecap="round"/>
+              <!-- slight leaf suggestion -->
+              <path d="M 132 220 Q 148 210 155 196"
+                    stroke="#7aaa5a" stroke-width="1.4" fill="none"
+                    stroke-opacity="0.45" stroke-linecap="round"/>
+            </g>
+
+            <!-- Seeds layer — populated by JS -->
+            <g id="seeds-layer"></g>
+
+            <!-- Centre nub -->
+            <circle cx="130" cy="148" r="4.5" fill="#c8b87a" opacity="0.80"/>
+
+          </svg>
+
+          <p><em>In awe,</em><br>
+          <em>Varsha</em></p>
+
+          <p>P.S. This site is dedicated to my first loves — writing and coding. Yes, it's an oxymoron.</p>
+
+        </TT>
+      </div>
+
+      <div class="five columns col-right" style="margin-top: 10%">
+        <TT>
+          <h4>&nbsp;</h4>
+          <p>
+            cd professional <br>
+            <a href="explore.html#case-redesign">/case studies</a><br>
+            <a href="explore.html#article-mentoring">/articles and talks</a><br>
+            <a href="explore.html#community">/community contributions</a><br>
+            <br>
+            cd ../personal <br>
+            <a href="explore.html#prose">/prose</a><br>
+            <a href="explore.html#poetry">/poetry</a><br>
+            <a href="explore.html#watercolors">/watercolors</a><br>
+            <a href="explore.html#photography">/photography</a><br>
+            <a href="explore.html#digital">/digital illustrations</a><br>
+            <a href="explore.html#physical">/physical computing</a><br>
+            <a href="explore.html#homely">/homely curation</a><br>
+            <a href="explore.html#cooking">/cooking</a><br>
+            <a href="explore.html#inspirations">/inspirations</a><br>
+            <br>
+          </p>
+        </TT>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+  (function () {
+
+    /* ════════════════════════════════════════════════════
+       CONFIG
+    ════════════════════════════════════════════════════ */
+    const CX = 130, CY = 148;   // globe centre
+
+    /*
+      Seed layers — like a real dandelion the seeds are packed
+      in concentric rings at different radii, making it look
+      dense and fluffy rather than just one thin ring.
+      Each layer: { r: radius from centre, count: seeds }
+    */
+    const LAYERS = [
+      { r:  0,  count:  1  },   // single centre seed pointing straight up
+      { r: 12,  count:  8  },
+      { r: 24,  count: 16  },
+      { r: 36,  count: 24  },
+      { r: 48,  count: 32  },
+      { r: 60,  count: 40  },   // outermost ring on globe edge
+    ];
+    // total: ~121 seeds — dense enough to look fluffy
+
+    const FILAMENT_EXTRA = 18;  // how far filament extends past layer radius
+    const PAPPUS_RAYS    = 14;  // rays per fan
+    const PAPPUS_LEN     = 13;  // ray length (longer = more umbrella-like)
+    const PAPPUS_SPREAD  = 110; // fan width in degrees (wide open umbrella)
+    const SEED_DOT_R     = 1.8; // small dot at filament base
+
+    /* Colours — light warm grey so they read on white page
+       (like white seeds on white paper — subtle but present) */
+    const FIL_COL    = '#8a7e6e';   // filament
+    const PAPPUS_COL = '#7a6e5e';   // pappus rays — slightly darker for contrast
+    const DOT_COL    = '#5a5048';   // seed dot — darkest
+
+    /* Fly: seeds drift upper-right (like the photo) with spread */
+    const FLY_BASE_ANGLE = -55; // degrees from horizontal — upper right
+    const FLY_SPREAD     = 70;  // ±35° of variation around that direction
+    const FLY_DIST_MIN   = 80;
+    const FLY_DIST_MAX   = 140;
+
+    const ns = 'http://www.w3.org/2000/svg';
+
+    /* Deterministic pseudo-random — stable on reload */
+    function h(n) {
+      let x = Math.sin(n + 1) * 43758.5453;
+      return x - Math.floor(x);
+    }
+
+    /* ════════════════════════════════════════════════════
+       BUILD SEEDS
+    ════════════════════════════════════════════════════ */
+    const seedData = [];
+    const layer = document.getElementById('seeds-layer');
+    let globalIdx = 0;
+
+    LAYERS.forEach(({ r: layerR, count }) => {
+      for (let s = 0; s < count; s++) {
+        const i = globalIdx++;
+
+        /* angle — evenly spaced with tiny wobble */
+        const baseAngle = (360 / count) * s + (count === 1 ? 0 : 0);
+        const wobble    = (h(i * 7.3) - 0.5) * 5;
+        const angleDeg  = baseAngle + wobble;
+        const angleRad  = (angleDeg - 90) * Math.PI / 180; // 0° = top
+
+        /* filament start at centre, tip at layer radius + extra */
+        const tipR  = layerR + FILAMENT_EXTRA + (h(i * 3.1) - 0.5) * 4;
+        const tx = CX + Math.cos(angleRad) * tipR;
+        const ty = CY + Math.sin(angleRad) * tipR;
+
+        /* seed dot position — at the globe sphere surface radius */
+        const dotR = layerR > 0 ? layerR * 0.75 : 5;
+        const dx = CX + Math.cos(angleRad) * dotR;
+        const dy = CY + Math.sin(angleRad) * dotR;
+
+        /* filament opacity — inner layers slightly more opaque */
+        const filOpacity = 0.55 + (1 - layerR / 60) * 0.25 + (h(i * 5.7) - 0.5) * 0.1;
+        const filWidth   = 0.55 + (1 - layerR / 60) * 0.25;
+
+        const g = document.createElementNS(ns, 'g');
+        g.classList.add('seed-g');
+
+        /* filament — straight line from dot to tip */
+        const line = document.createElementNS(ns, 'line');
+        line.setAttribute('x1', dx.toFixed(2));
+        line.setAttribute('y1', dy.toFixed(2));
+        line.setAttribute('x2', tx.toFixed(2));
+        line.setAttribute('y2', ty.toFixed(2));
+        line.setAttribute('stroke', FIL_COL);
+        line.setAttribute('stroke-width', filWidth.toFixed(2));
+        line.setAttribute('stroke-opacity', filOpacity.toFixed(2));
+        line.setAttribute('stroke-linecap', 'round');
+        g.appendChild(line);
+
+        /* pappus fan at tip */
+        const halfSpread = PAPPUS_SPREAD / 2;
+        for (let pr = 0; pr < PAPPUS_RAYS; pr++) {
+          const frac      = pr / (PAPPUS_RAYS - 1);
+          const rayOffset = -halfSpread + frac * PAPPUS_SPREAD;
+          const rayAngle  = angleRad + (rayOffset * Math.PI / 180);
+
+          /* outer rays slightly shorter */
+          const rayLen    = PAPPUS_LEN * (0.75 + 0.25 * Math.cos(rayOffset * Math.PI / PAPPUS_SPREAD));
+          const rx2 = tx + Math.cos(rayAngle) * rayLen;
+          const ry2 = ty + Math.sin(rayAngle) * rayLen;
+
+          /* centre rays more opaque — fan reads as a dome */
+          const centrality = 1 - Math.abs(frac - 0.5) * 2;
+          const rayOpacity = 0.55 + centrality * 0.35;
+          const rayWidth   = 0.45 + centrality * 0.35;
+
+          const ray = document.createElementNS(ns, 'line');
+          ray.setAttribute('x1', tx.toFixed(2));
+          ray.setAttribute('y1', ty.toFixed(2));
+          ray.setAttribute('x2', rx2.toFixed(2));
+          ray.setAttribute('y2', ry2.toFixed(2));
+          ray.setAttribute('stroke', PAPPUS_COL);
+          ray.setAttribute('stroke-width', rayWidth.toFixed(2));
+          ray.setAttribute('stroke-opacity', rayOpacity.toFixed(2));
+          ray.setAttribute('stroke-linecap', 'round');
+          g.appendChild(ray);
+        }
+
+        /* seed dot at base of filament */
+        const dot = document.createElementNS(ns, 'circle');
+        dot.setAttribute('cx', dx.toFixed(2));
+        dot.setAttribute('cy', dy.toFixed(2));
+        dot.setAttribute('r', SEED_DOT_R.toFixed(1));
+        dot.setAttribute('fill', DOT_COL);
+        dot.setAttribute('opacity', (0.5 + (1 - layerR / 60) * 0.35).toFixed(2));
+        g.appendChild(dot);
+
+        /* fly vector — upper right direction with spread */
+        const flyAngleDeg = FLY_BASE_ANGLE + (h(i * 11.3) - 0.5) * FLY_SPREAD;
+        const flyAngleRad = flyAngleDeg * Math.PI / 180;
+        const flyDist     = FLY_DIST_MIN + h(i * 6.7) * (FLY_DIST_MAX - FLY_DIST_MIN);
+        const flyDx = Math.cos(flyAngleRad) * flyDist;
+        const flyDy = Math.sin(flyAngleRad) * flyDist;
+        const flyRot = (h(i * 8.9) - 0.5) * 40;
+
+        const baseOpacity = Math.min(0.9, filOpacity + 0.08);
+
+        /* set initial state */
+        g.style.transformOrigin = `${dx.toFixed(2)}px ${dy.toFixed(2)}px`;
+        g.style.opacity = baseOpacity;
+
+        layer.appendChild(g);
+        seedData.push({ g, flyDx, flyDy, flyRot, baseOpacity, dotX: dx, dotY: dy });
+      }
+    });
+
+    /* ════════════════════════════════════════════════════
+       HOVER INTERACTION
+    ════════════════════════════════════════════════════ */
+    const svg = document.getElementById('dandelion-svg');
+    let blowTimers   = [];
+    let returnTimers = [];
+    let isHovering   = false;
+
+    function clearAll() {
+      blowTimers.forEach(clearTimeout);
+      returnTimers.forEach(clearTimeout);
+      blowTimers = []; returnTimers = [];
+    }
+
+    function blowSeeds() {
+      isHovering = true;
+      /* shuffle order so seeds don't leave in ring order — more natural */
+      const order = seedData.map((_, i) => i).sort((a, b) => h(a * 13.1 + 2) - h(b * 13.1 + 2));
+
+      order.forEach((si, qi) => {
+        const { g, flyDx, flyDy, flyRot, dotX, dotY } = seedData[si];
+        const delay = qi * 18 + h(si * 3.7) * 30; // tight stagger ~18ms apart
+        const t = setTimeout(() => {
+          if (!isHovering) return;
+          const dur = 1.4 + h(si * 4.1) * 0.8;
+          g.style.transformOrigin = `${dotX.toFixed(2)}px ${dotY.toFixed(2)}px`;
+          g.style.transition = `transform ${dur}s cubic-bezier(0.2,0.6,0.4,1.0),
+                                 opacity   ${(dur * 0.9).toFixed(2)}s ease-out`;
+          g.style.transform = `translate(${flyDx.toFixed(1)}px,${flyDy.toFixed(1)}px) rotate(${flyRot.toFixed(1)}deg)`;
+          g.style.opacity   = '0';
+        }, delay);
+        blowTimers.push(t);
+      });
+    }
+
+    function returnSeeds() {
+      isHovering = false;
+      seedData.forEach(({ g, baseOpacity, dotX, dotY }, si) => {
+        const delay = si * 8 + h(si * 2.3) * 20;
+        const t = setTimeout(() => {
+          const dur = 0.9 + h(si * 5.2) * 0.5;
+          g.style.transformOrigin = `${dotX.toFixed(2)}px ${dotY.toFixed(2)}px`;
+          g.style.transition = `transform ${dur}s cubic-bezier(0.25,0.46,0.45,0.94),
+                                 opacity   ${dur}s ease-in`;
+          g.style.transform  = 'translate(0,0) rotate(0deg)';
+          g.style.opacity    = baseOpacity;
+        }, delay);
+        returnTimers.push(t);
+      });
+    }
+
+    svg.addEventListener('mouseenter', () => { clearAll(); blowSeeds(); });
+    svg.addEventListener('mouseleave', () => { clearAll(); returnSeeds(); });
+
+  })();
+  </script>
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>

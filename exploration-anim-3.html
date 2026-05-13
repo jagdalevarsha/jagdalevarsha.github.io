@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Varsha Jagdale</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;300;400;600&display=swap" rel="stylesheet">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+  <style>
+
+    body, TT, tt, h4, p, a {
+      font-family: 'Source Code Pro', monospace;
+    }
+
+    .row.equal-height { display: flex; align-items: stretch; }
+    .row.equal-height .columns { float: none; }
+    .col-left  { padding-right: 4%; }
+    .col-right {
+      border-left: 1px solid #e0e0e0; padding-left: 4%;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    h4 { font-weight: 600; letter-spacing: 0.02em; }
+    .col-left TT p { font-weight: 200; line-height: 1.85; }
+    .col-left TT p:last-child { font-weight: 200; color: inherit; }
+    .col-right TT p { font-weight: 300; line-height: 1.9; }
+    .col-right TT a { font-weight: 200; }
+
+    /* ── Animation 3: Interactive breath ─────────────────
+       Click or hover the dandelion to blow seeds away.
+       Seeds fly in the direction of the pointer.
+       Globe resets after 3 seconds of no interaction.
+       Cursor changes to indicate interactivity.
+    ──────────────────────────────────────────────────── */
+
+    .dandelion-stage {
+      position: fixed;
+      top: 0; right: 0;
+      width: 280px; height: 320px;
+      pointer-events: all;      /* receives mouse events */
+      z-index: 5;
+      cursor: crosshair;
+    }
+
+    /* Subtle glow on hover to invite interaction */
+    .dandelion-stage:hover .globe-hint {
+      opacity: 0.18;
+      transition: opacity 0.4s ease;
+    }
+
+    .globe-hint {
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    .variation-label {
+      position: fixed;
+      bottom: 20px; right: 20px;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 10px;
+      font-weight: 300;
+      color: #bbb;
+      letter-spacing: 0.08em;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .blow-hint {
+      position: fixed;
+      top: 52px; right: 24px;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 9px;
+      font-weight: 200;
+      color: #ccc;
+      letter-spacing: 0.12em;
+      z-index: 10;
+      pointer-events: none;
+      transition: opacity 1s ease;
+    }
+
+    /* Seed elements — JS will toggle class "flying" */
+    .seed-g {
+      transition: opacity 0.2s ease;
+    }
+    .seed-g.flying {
+      /* JS sets inline transform + custom animation per seed */
+    }
+
+    /* Stem micro-sway on blow */
+    @keyframes quickSway {
+      0%   { transform: rotate(0deg); }
+      15%  { transform: rotate(2deg); }
+      45%  { transform: rotate(-1.5deg); }
+      75%  { transform: rotate(0.5deg); }
+      100% { transform: rotate(0deg); }
+    }
+    .stem-g.swaying {
+      animation: quickSway 1.2s ease-in-out forwards;
+      transform-origin: 148px 318px;
+    }
+
+  </style>
+
+</head>
+<body>
+
+  <div class="variation-label">// anim-3 &nbsp; interactive &nbsp; click the dandelion to blow</div>
+  <div class="blow-hint" id="blowHint">↑ click to blow</div>
+
+  <!-- ── Dandelion — interactive ── -->
+  <svg class="dandelion-stage" id="dandelion" viewBox="0 0 280 320" xmlns="http://www.w3.org/2000/svg">
+
+    <!-- Hover hint glow -->
+    <circle class="globe-hint" cx="140" cy="168" r="58" fill="#c8b98a" stroke="none"/>
+
+    <!-- Stem -->
+    <g class="stem-g" id="stemGroup">
+      <path d="M 148 318 Q 152 250 140 168" stroke="#b0a890" stroke-width="1.2"
+            fill="none" stroke-opacity="0.55" stroke-linecap="round"/>
+    </g>
+
+    <!-- Seeds — all start attached, JS animates them away on click -->
+
+    <g class="seed-g" id="seed-0">
+      <path d="M 140 168 Q 162 178 178 188" stroke="#a89e84" stroke-width="0.85" fill="none" stroke-opacity="0.65" stroke-linecap="round"/>
+      <line x1="178" y1="188" x2="185" y2="183" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.45"/>
+      <line x1="178" y1="188" x2="186" y2="190" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.45"/>
+      <line x1="178" y1="188" x2="182" y2="196" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.45"/>
+    </g>
+
+    <g class="seed-g" id="seed-1">
+      <path d="M 140 168 Q 118 178 102 188" stroke="#a89e84" stroke-width="0.85" fill="none" stroke-opacity="0.65" stroke-linecap="round"/>
+      <line x1="102" y1="188" x2="95" y2="183" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.45"/>
+      <line x1="102" y1="188" x2="94" y2="190" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.45"/>
+      <line x1="102" y1="188" x2="98" y2="196" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.45"/>
+    </g>
+
+    <g class="seed-g" id="seed-2">
+      <path d="M 140 168 Q 166 162 184 156" stroke="#a89e84" stroke-width="0.85" fill="none" stroke-opacity="0.65" stroke-linecap="round"/>
+      <line x1="184" y1="156" x2="192" y2="151" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.45"/>
+      <line x1="184" y1="156" x2="193" y2="157" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.45"/>
+      <line x1="184" y1="156" x2="190" y2="163" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.45"/>
+    </g>
+
+    <g class="seed-g" id="seed-3">
+      <path d="M 140 168 Q 114 162 96 156" stroke="#a89e84" stroke-width="0.85" fill="none" stroke-opacity="0.65" stroke-linecap="round"/>
+      <line x1="96" y1="156" x2="88" y2="151" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.45"/>
+      <line x1="96" y1="156" x2="87" y2="157" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.45"/>
+      <line x1="96" y1="156" x2="90" y2="163" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.45"/>
+    </g>
+
+    <g class="seed-g" id="seed-4">
+      <path d="M 140 168 Q 140 190 140 206" stroke="#a89e84" stroke-width="0.85" fill="none" stroke-opacity="0.6" stroke-linecap="round"/>
+      <line x1="140" y1="206" x2="134" y2="214" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="140" y1="206" x2="140" y2="215" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="140" y1="206" x2="146" y2="214" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.4"/>
+    </g>
+
+    <g class="seed-g" id="seed-5">
+      <path d="M 140 168 Q 116 148 104 130" stroke="#a89e84" stroke-width="0.8" fill="none" stroke-opacity="0.58" stroke-linecap="round"/>
+      <line x1="104" y1="130" x2="97" y2="122" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.38"/>
+      <line x1="104" y1="130" x2="101" y2="121" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.38"/>
+      <line x1="104" y1="130" x2="110" y2="123" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.38"/>
+    </g>
+
+    <g class="seed-g" id="seed-6">
+      <path d="M 140 168 Q 160 146 172 128" stroke="#a89e84" stroke-width="0.8" fill="none" stroke-opacity="0.58" stroke-linecap="round"/>
+      <line x1="172" y1="128" x2="179" y2="120" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.38"/>
+      <line x1="172" y1="128" x2="173" y2="119" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.38"/>
+      <line x1="172" y1="128" x2="178" y2="128" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.38"/>
+    </g>
+
+    <g class="seed-g" id="seed-7">
+      <path d="M 140 168 Q 136 132 134 106" stroke="#a89e84" stroke-width="0.8" fill="none" stroke-opacity="0.6" stroke-linecap="round"/>
+      <line x1="134" y1="106" x2="128" y2="97" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="134" y1="106" x2="134" y2="96" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="134" y1="106" x2="140" y2="98" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.4"/>
+    </g>
+
+    <g class="seed-g" id="seed-8">
+      <path d="M 140 168 Q 156 134 166 108" stroke="#a89e84" stroke-width="0.8" fill="none" stroke-opacity="0.6" stroke-linecap="round"/>
+      <line x1="166" y1="108" x2="173" y2="100" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="166" y1="108" x2="167" y2="99" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="166" y1="108" x2="172" y2="108" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.4"/>
+    </g>
+
+    <g class="seed-g" id="seed-9">
+      <path d="M 140 168 Q 118 138 106 112" stroke="#a89e84" stroke-width="0.8" fill="none" stroke-opacity="0.6" stroke-linecap="round"/>
+      <line x1="106" y1="112" x2="99" y2="104" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="106" y1="112" x2="103" y2="103" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="106" y1="112" x2="112" y2="105" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.4"/>
+    </g>
+
+    <g class="seed-g" id="seed-10">
+      <path d="M 140 168 Q 170 148 190 132" stroke="#a89e84" stroke-width="0.8" fill="none" stroke-opacity="0.55" stroke-linecap="round"/>
+      <line x1="190" y1="132" x2="198" y2="126" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.38"/>
+      <line x1="190" y1="132" x2="199" y2="133" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.38"/>
+      <line x1="190" y1="132" x2="196" y2="140" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.38"/>
+    </g>
+
+    <g class="seed-g" id="seed-11">
+      <path d="M 140 168 Q 110 148 90 132" stroke="#a89e84" stroke-width="0.8" fill="none" stroke-opacity="0.55" stroke-linecap="round"/>
+      <line x1="90" y1="132" x2="82" y2="126" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.38"/>
+      <line x1="90" y1="132" x2="81" y2="133" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.38"/>
+      <line x1="90" y1="132" x2="84" y2="140" stroke="#a89e84" stroke-width="0.5" stroke-opacity="0.38"/>
+    </g>
+
+    <circle cx="140" cy="168" r="3" fill="#a89e84" opacity="0.5"/>
+
+  </svg>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container" style="position:relative; z-index:1;">
+    <div class="row equal-height">
+
+      <div class="seven columns col-left" style="margin-top: 10%">
+        <TT>
+          <h4>cd varsha/mind</h4>
+          <p>Hello world. You just browsed into my biological computer.</p>
+          <p>I move through the world chasing beauty — in ideas, in objects,
+          in the way light falls at the end of an afternoon. Professionally
+          I've wandered across computer engineering, product design, and
+          user research. Personally, just as many areas.</p>
+          <p>I'm moved by things that are soft and stubborn at once —
+          delicate enough to scatter in the wind, persistent enough to
+          grow through concrete. That's the kind of work I try to do.</p>
+          <p>When I'm not lost in the world looking for wonder, wisdom,
+          and wit, I come here to file my inspirations and creations.
+          Hope you find something that lands.</p>
+          <p>This site is dedicated to my first loves - writing and coding. Yep, it's an oxymoron.</p>
+        </TT>
+      </div>
+
+      <div class="five columns col-right">
+        <TT>
+          <h4>&nbsp;</h4>
+          <p>
+            cd professional <br>
+            <a href="caseStudies.html">/case studies</a><br>
+            <a href="articles.html">/articles and talks</a><br>
+            <a href="communityContributions.html">/community contributions</a><br>
+            <br>
+            cd ../personal <br>
+            <a href="prose.html">/prose</a><br>
+            <a href="poetry.html">/poetry</a><br>
+            <a href="watercolors.html">/watercolors</a><br>
+            <a href="photography.html">/photography</a><br>
+            <a href="digitalIllustrations.html">/digital illustrations</a><br>
+            <a href="handCrafted.html">/physical computing</a><br>
+            <a href="interiorDecor.html">/homely curation</a><br>
+            <a href="cooking.html">/cooking</a><br>
+            <a href="inspirations.html">/inspirations</a><br>
+            <br>
+          </p>
+        </TT>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const svg = document.getElementById('dandelion');
+      const stemGroup = document.getElementById('stemGroup');
+      const hint = document.getElementById('blowHint');
+
+      // SVG coordinate centre of the globe
+      const CX = 140, CY = 168;
+
+      // All seed groups, in order they'll fly
+      const seeds = Array.from({ length: 12 }, (_, i) => document.getElementById('seed-' + i));
+
+      // Track which seeds have blown away and reset timeout
+      let blown = new Set();
+      let resetTimer = null;
+
+      // Spread vectors for each seed so they scatter in varied directions
+      // Each entry: [dx, dy, rotation] — how far to fly in SVG units
+      const spreadVectors = [
+        [ 55,  45, -20],   // seed-0  lower-right → out & down-right
+        [-55,  45,  22],   // seed-1  lower-left  → out & down-left
+        [ 70,  10, -15],   // seed-2  right        → far right
+        [-70,  10,  18],   // seed-3  left         → far left
+        [  8,  80, -5 ],   // seed-4  bottom       → straight down
+        [-60, -40,  25],   // seed-5  upper-left   → up-left
+        [ 60, -40, -22],   // seed-6  upper-right  → up-right
+        [-15, -90,  10],   // seed-7  upper-centre-left
+        [ 15, -90, -10],   // seed-8  upper-centre-right
+        [-40, -80,  20],   // seed-9  upper-left   → up-left far
+        [ 75, -20, -25],   // seed-10 far right
+        [-75, -20,  28],   // seed-11 far left
+      ];
+
+      function blowSeed(index, delay) {
+        if (blown.has(index)) return;
+        blown.add(index);
+
+        const el = seeds[index];
+        if (!el) return;
+
+        const [dx, dy, rot] = spreadVectors[index];
+        // Add some natural randomness
+        const jitterX = (Math.random() - 0.5) * 20;
+        const jitterY = (Math.random() - 0.5) * 20;
+        const jitterR = (Math.random() - 0.5) * 15;
+
+        const finalX = dx + jitterX;
+        const finalY = dy + jitterY;
+        const finalR = rot + jitterR;
+
+        el.style.transition = `transform ${1.8 + Math.random() * 1.2}s ${delay}s cubic-bezier(0.25,0.46,0.45,0.94),
+                               opacity   ${2.0 + Math.random() * 0.8}s ${delay}s ease`;
+        el.style.transform = `translate(${finalX}px, ${finalY}px) rotate(${finalR}deg)`;
+        el.style.transformOrigin = `${CX}px ${CY}px`;
+        el.style.opacity = '0';
+      }
+
+      function blowAll() {
+        // Sway the stem
+        stemGroup.classList.remove('swaying');
+        void stemGroup.offsetWidth; // reflow to restart animation
+        stemGroup.classList.add('swaying');
+
+        // Stagger all seeds
+        seeds.forEach((_, i) => {
+          blowSeed(i, i * 0.18);
+        });
+
+        scheduleReset();
+      }
+
+      function scheduleReset() {
+        if (resetTimer) clearTimeout(resetTimer);
+        resetTimer = setTimeout(resetGlobe, 4000);
+      }
+
+      function resetGlobe() {
+        blown.clear();
+        seeds.forEach(el => {
+          if (!el) return;
+          // Fade back in at origin
+          el.style.transition = 'transform 1.4s ease, opacity 1.2s ease';
+          el.style.transform  = '';
+          el.style.opacity    = '';
+        });
+        stemGroup.classList.remove('swaying');
+        hint.style.opacity = '1';
+      }
+
+      // Click anywhere on the dandelion SVG → blow
+      svg.addEventListener('click', function (e) {
+        hint.style.opacity = '0';
+        blowAll();
+      });
+
+      // Subtle: hover briefly over globe area → blow one seed at a time (mousemove)
+      let lastHoverBlow = 0;
+      svg.addEventListener('mousemove', function (e) {
+        const now = Date.now();
+        if (now - lastHoverBlow < 600) return; // throttle
+        if (blown.size >= seeds.length) return;
+
+        // Convert mouse position to SVG coordinates
+        const rect = svg.getBoundingClientRect();
+        const scaleX = 280 / rect.width;
+        const scaleY = 320 / rect.height;
+        const mx = (e.clientX - rect.left) * scaleX;
+        const my = (e.clientY - rect.top)  * scaleY;
+
+        // Only trigger near the globe
+        const dist = Math.hypot(mx - CX, my - CY);
+        if (dist > 75) return;
+
+        hint.style.opacity = '0';
+
+        // Blow next unblown seed
+        const next = seeds.findIndex((_, i) => !blown.has(i));
+        if (next !== -1) {
+          blowSeed(next, 0);
+          scheduleReset();
+          lastHoverBlow = now;
+        }
+      });
+
+    })();
+  </script>
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>

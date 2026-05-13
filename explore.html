@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Varsha Jagdale</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+  <style>
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Source Code Pro', monospace;
+      background: #ffffff;
+      color: #2e2e2e;
+      height: 100vh;
+      display: flex;
+      overflow: hidden;
+    }
+
+    /* ── LEFT NAV — 25% ───────────────────────────────── */
+    #nav {
+      width: 360px;
+      min-width: 360px;
+      max-width: 360px;
+      height: 100vh;
+      overflow-y: auto;
+      border-right: 1px solid #e0e0e0;
+      padding: 5% 5% 6% 6%;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Nav heading — same weight as home page h4 ── */
+    #nav h4 {
+      font-size: 0.9rem;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      margin-bottom: 0.3rem;
+      color: #1a1a1a;
+    }
+
+    .nav-section { margin-bottom: 1.4rem; }
+
+    /* "cd professional" / "cd ../personal" — matches home page plain text label */
+    .nav-section-label {
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: #2e2e2e;
+      letter-spacing: 0.01em;
+      margin-bottom: 0.3rem;
+      margin-top: 0.8rem;
+      padding-left: 0;
+    }
+
+    /* Links — cyan like home page, underlined */
+    .nav-link {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: #3aabbd;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      padding: 0.18rem 0;
+      cursor: pointer;
+      transition: color 0.15s ease;
+      line-height: 1.9;
+      white-space: nowrap;
+    }
+    .nav-link:hover { color: #1a8a9e; }
+    .nav-link.active {
+      color: #7aaa5a;
+      font-weight: 400;
+      text-decoration-color: #7aaa5a;
+    }
+
+    /* Expandable toggle — looks like a link, arrow minimal */
+    .nav-expandable { position: relative; }
+
+    .nav-expand-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: #3aabbd;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      cursor: pointer;
+      padding: 0.18rem 0;
+      line-height: 1.9;
+      transition: color 0.15s ease;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .nav-expand-toggle:hover { color: #1a8a9e; }
+    .nav-expand-toggle.active { color: #7aaa5a; font-weight: 400; text-decoration-color: #7aaa5a; }
+
+    .expand-arrow {
+      font-size: 0.55rem;
+      opacity: 0.45;
+      transition: transform 0.2s ease;
+      margin-left: 5px;
+      text-decoration: none;
+    }
+    .nav-expand-toggle.open .expand-arrow { transform: rotate(90deg); }
+
+    .nav-sub {
+      display: none;
+      padding-left: 0.8rem;
+      border-left: 1px solid #d8f0f4;
+      margin-top: 0.1rem;
+      margin-bottom: 0.2rem;
+    }
+    .nav-sub.open { display: block; }
+
+    .nav-sub .nav-link {
+      font-size: 0.79rem;
+      color: #3aabbd;
+    }
+    .nav-sub .nav-link.active { color: #7aaa5a; font-weight: 400; text-decoration-color: #7aaa5a; }
+
+
+    /* ── RIGHT CONTENT PANEL — 75% ────────────────────── */
+    #content {
+      flex: 1;
+      height: 100vh;
+      overflow-y: auto;
+      padding: 5% 7% 8% 6%;
+      position: relative;
+    }
+
+    /* panel fade-in on switch */
+    .panel { display: none; animation: fadeIn 0.25s ease; }
+    .panel.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ── SHARED CONTENT STYLES — matches home page ───── */
+    .content-body p {
+      font-size: 0.88rem;
+      font-weight: 200;
+      line-height: 1.85;
+      margin-bottom: 1.1rem;
+      max-width: 64ch;
+      color: #333;
+    }
+
+    .content-body a {
+      font-weight: 200;
+      color: #333;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .content-body a:hover { color: #000; }
+
+    .content-body h5 {
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin: 2rem 0 0.5rem;
+      letter-spacing: 0.02em;
+      color: #1a1a1a;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #e8e4dc;
+      margin: 2rem 0;
+    }
+
+    /* ── LINK LIST (prose / articles / inspirations) ──── */
+    .link-list { list-style: none; }
+    .link-list li {
+      padding: 0.7rem 0;
+      border-bottom: 1px solid #f0ece4;
+    }
+    .link-list li:last-child { border-bottom: none; }
+
+    .link-list a {
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: #333;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.2rem;
+      transition: color 0.15s;
+    }
+    .link-list a:hover { color: #000; }
+
+    .link-list .link-meta {
+      font-size: 0.75rem;
+      font-weight: 200;
+      color: #aaa;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── POETRY ───────────────────────────────────────── */
+    .poem { margin-bottom: 3rem; }
+    .poem-title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      letter-spacing: 0.04em;
+    }
+    .poem-body {
+      font-size: 0.85rem;
+      font-weight: 200;
+      line-height: 2;
+      white-space: pre-line;
+      color: #333;
+    }
+
+    /* ── PHOTOGRAPHY GALLERY ──────────────────────────── */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 10px;
+      align-items: start;
+    }
+    .photo-item {
+      cursor: pointer;
+      background: #f0ece4;
+    }
+    .photo-item .img-wrap {
+      overflow: hidden;
+    }
+    .photo-item img {
+      width: 100%;
+      display: block;
+      transition: transform 0.4s ease, opacity 0.3s ease;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+    }
+    .photo-item:hover img { transform: scale(1.03); opacity: 0.9; }
+    .photo-caption {
+      font-size: 0.72rem;
+      font-weight: 200;
+      color: #4a6640;
+      background: #eef6e8;
+      padding: 0.5rem 0.7rem 0.7rem;
+      line-height: 1.6;
+      white-space: normal;
+      word-wrap: break-word;
+      overflow: visible;
+    }
+
+    /* Lightbox */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 5%;
+      cursor: pointer;
+    }
+    #lightbox.open { display: flex; }
+    #lightbox img {
+      max-width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
+      display: block;
+    }
+    #lightbox-caption {
+      color: #ccc;
+      font-size: 0.8rem;
+      font-weight: 200;
+      margin-top: 1rem;
+      text-align: center;
+      max-width: 60ch;
+      line-height: 1.6;
+    }
+    #lightbox-close {
+      position: absolute;
+      top: 1.5rem; right: 2rem;
+      color: #888;
+      font-size: 1.4rem;
+      cursor: pointer;
+      font-weight: 200;
+    }
+
+    /* ── CASE STUDY ───────────────────────────────────── */
+    .case-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 300;
+      color: #aaa;
+      border: 1px solid #e0ddd6;
+      padding: 0.15rem 0.5rem;
+      margin-right: 0.4rem;
+      margin-bottom: 0.4rem;
+      letter-spacing: 0.06em;
+    }
+    .case-section { margin-bottom: 2.4rem; }
+    .case-section h5 {
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: #aaa;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.6rem;
+      text-transform: uppercase;
+    }
+
+    /* ── VIDEO (physical computing) ───────────────────── */
+    .video-item { margin-bottom: 2.8rem; }
+    .video-item iframe {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border: none;
+      display: block;
+    }
+    .video-caption {
+      font-size: 0.8rem;
+      font-weight: 200;
+      color: #888;
+      margin-top: 0.7rem;
+      line-height: 1.6;
+    }
+
+    /* ── COMING SOON ──────────────────────────────────── */
+    .coming-soon {
+      font-size: 0.85rem;
+      font-weight: 200;
+      color: #bbb;
+      margin-top: 3rem;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════
+       LEFT NAV
+  ══════════════════════════════════════════ -->
+  <nav id="nav">
+    <a href="exploration-anim-4.html" style="text-decoration:none; color:inherit;">
+      <h4>cd varsha/mind</h4>
+    </a>
+    <a href="exploration-anim-4.html" style="display:block; font-size:0.78rem; font-weight:300; color:#3aabbd; text-decoration:underline; text-underline-offset:2px; margin-bottom:1.6rem; margin-top:0.25rem; transition:color 0.15s;">← home</a>
+
+    <div class="nav-section">
+      <div class="nav-section-label">cd professional</div>
+
+      <!-- Case studies — expandable -->
+      <div class="nav-expandable">
+        <div class="nav-expand-toggle" id="toggle-cases" onclick="toggleExpand('cases')">
+          /case studies <span class="expand-arrow">▶</span>
+        </div>
+        <div class="nav-sub" id="sub-cases">
+          <a class="nav-link" onclick="show('case-redesign')">/enterprise redesign</a>
+          <a class="nav-link" onclick="show('case-research')">/research ops</a>
+        </div>
+      </div>
+
+      <!-- Articles — expandable -->
+      <div class="nav-expandable">
+        <div class="nav-expand-toggle" id="toggle-articles" onclick="toggleExpand('articles')">
+          /articles and talks <span class="expand-arrow">▶</span>
+        </div>
+        <div class="nav-sub" id="sub-articles">
+          <a class="nav-link" onclick="show('article-mentoring')">/mentoring a ux intern</a>
+          <a class="nav-link" onclick="show('article-hcd')">/human centred design</a>
+          <a class="nav-link" style="color:#ccc; cursor:default">/talk placeholder</a>
+        </div>
+      </div>
+      <a class="nav-link" onclick="show('community')">/community contributions</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">cd ../personal</div>
+      <!-- Prose — expandable -->
+      <div class="nav-expandable">
+        <div class="nav-expand-toggle" id="toggle-prose" onclick="toggleExpand('prose')">
+          /prose <span class="expand-arrow">▶</span>
+        </div>
+        <div class="nav-sub" id="sub-prose">
+          <a class="nav-link" onclick="show('prose-farewell')">/farewell to vmware</a>
+          <a class="nav-link" style="color:#ccc; cursor:default">/debate to learn better</a>
+          <a class="nav-link" style="color:#ccc; cursor:default">/write before clarity</a>
+          <a class="nav-link" style="color:#ccc; cursor:default">/discover yourself</a>
+        </div>
+      </div>
+      <a class="nav-link" onclick="show('poetry')">/poetry</a>
+      <a class="nav-link" onclick="show('watercolors')">/watercolors</a>
+      <a class="nav-link" onclick="show('photography')">/photography</a>
+      <a class="nav-link" onclick="show('digital')">/digital illustrations</a>
+      <a class="nav-link" onclick="show('physical')">/physical computing</a>
+      <a class="nav-link" onclick="show('homely')">/homely curation</a>
+      <a class="nav-link" onclick="show('cooking')">/cooking</a>
+      <a class="nav-link" onclick="show('inspirations')">/inspirations</a>
+    </div>
+
+  </nav>
+
+  <!-- ══════════════════════════════════════════
+       RIGHT CONTENT
+  ══════════════════════════════════════════ -->
+  <main id="content">
+
+    <!-- DEFAULT: nothing selected yet -->
+    <div id="panel-default" class="panel active">
+      <div style="margin-top: 20vh; color: #ccc; font-size: 0.82rem; font-weight: 200; letter-spacing: 0.08em;">
+        select something from the left →
+      </div>
+    </div>
+
+    <!-- ─── CASE STUDY: Enterprise Redesign ─────────── -->
+    <div id="panel-case-redesign" class="panel">
+      <div class="content-body">
+        <h5>Enterprise Dashboard Redesign</h5>
+        <div style="margin-bottom:1.2rem">
+          <span class="case-tag">product design</span>
+          <span class="case-tag">enterprise</span>
+          <span class="case-tag">research</span>
+        </div>
+        <div class="case-section">
+          <h5>The problem</h5>
+          <p>[ placeholder — describe the problem space, user pain points, and business context here. ]</p>
+        </div>
+        <div class="case-section">
+          <h5>The approach</h5>
+          <p>[ placeholder — research methods, synthesis, how insights shaped direction. ]</p>
+        </div>
+        <div class="case-section">
+          <h5>The outcome</h5>
+          <p>[ placeholder — what shipped, what changed, what was learned. ]</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── CASE STUDY: Research Ops ────────────────── -->
+    <div id="panel-case-research" class="panel">
+      <div class="content-body">
+        <h5>Founding a Research Function</h5>
+        <div style="margin-bottom:1.2rem">
+          <span class="case-tag">research ops</span>
+          <span class="case-tag">systems</span>
+          <span class="case-tag">org design</span>
+        </div>
+        <div class="case-section">
+          <h5>The problem</h5>
+          <p>[ placeholder — what was missing, why research maturity mattered at this stage. ]</p>
+        </div>
+        <div class="case-section">
+          <h5>The approach</h5>
+          <p>[ placeholder — how the function was built, what infrastructure was created. ]</p>
+        </div>
+        <div class="case-section">
+          <h5>The outcome</h5>
+          <p>[ placeholder — scale of impact, what compounded over time. ]</p>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ─── ARTICLE: Mentoring a UX intern ──────────── -->
+    <div id="panel-article-mentoring" class="panel">
+      <div class="content-body">
+        <h5>How to mentor a UX intern</h5>
+        <p style="font-size:0.75rem; color:#aaa; margin-bottom:1.6rem">Medium · VMware Design</p>
+        <p>[ placeholder — paste full article text here ]</p>
+        <p><a href="https://medium.com/vmwaredesign/what-i-learned-from-mentoring-a-ux-intern-f9b4c087f4d4" target="_blank" style="font-size:0.8rem; color:#888">read on Medium →</a></p>
+      </div>
+    </div>
+
+    <!-- ─── ARTICLE: Human centred design ────────────── -->
+    <div id="panel-article-hcd" class="panel">
+      <div class="content-body">
+        <h5>Life skills learnt from human centred design</h5>
+        <p style="font-size:0.75rem; color:#aaa; margin-bottom:1.6rem">Medium</p>
+        <p>[ placeholder — paste full article text here ]</p>
+        <p><a href="https://medium.com/@varshajagdale/what-human-centred-design-taught-me-about-life-602f66d95066" target="_blank" style="font-size:0.8rem; color:#888">read on Medium →</a></p>
+      </div>
+    </div>
+
+    <!-- ─── COMMUNITY ─────────────────────────────────── -->
+    <div id="panel-community" class="panel">
+      <div class="content-body">
+        <p class="coming-soon">Coming soon.</p>
+      </div>
+    </div>
+
+    <!-- ─── PROSE ─────────────────────────────────────── -->
+    <div id="panel-prose" class="panel">
+      <div class="content-body">
+        <ul class="link-list">
+
+          <li>
+            <a onclick="show('prose-farewell'); return false" href="#" style="cursor:pointer">
+              Farewell to VMware
+            </a>
+            <span class="link-meta">letter · 2023</span>
+          </li>
+          <li>
+            <a href="https://medium.com/@varshajagdale/how-to-debate-to-learn-better-3e8808a1d2e3" target="_blank">
+              Debate to learn better →
+            </a>
+            <span class="link-meta">Medium · [ placeholder for full text ]</span>
+          </li>
+          <li>
+            <a href="https://medium.com/@varshajagdale/write-before-having-clarity-38e953f8cbaa" target="_blank">
+              Write before having clarity →
+            </a>
+            <span class="link-meta">Medium · [ placeholder for full text ]</span>
+          </li>
+          <li>
+            <a href="https://medium.com/@varshajagdale/to-discover-self-or-not-979239410590" target="_blank">
+              Discover your true self →
+            </a>
+            <span class="link-meta">Medium · [ placeholder for full text ]</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ─── PROSE: Farewell Letter ────────────────────── -->
+    <div id="panel-prose-farewell" class="panel">
+      <div class="content-body">
+        <h5>Farewell to VMware</h5>
+        <hr class="divider">
+        <p>Dear VMware,</p>
+        <p>I think writing is easy, until one has to pen down a farewell letter. I realized how blessed I've been when I struggled to pick the best of VMware memories to include here. I'm so spoilt for choices. I'm just going to blame you all for this, kidding!</p>
+        <p>Few years ago we were trying to research the culture of the design team and by extension of VMware. Naive me thought we needed new research methods for it. A few years since then, I've come to realize that no novel research method could have done justice. For culture is one those things that is felt and not intellectualized.</p>
+        <p>I'll try my best to describe what our culture felt like. The feeling of a team was transcended to be that of a tribe. The tribe that held space for my voice, actions, determination, curiosities, needs, pranks, jokes, ideas, pushbacks, aspirations, failures, and disappointments. You held space for me to be me. As tribe mates do. This tribe is the embodiment of "utmost care". The only action I can take is to stay true to tribes' caring spirit even after. The only hope I have is for this tribe to come together some time again.</p>
+        <p>Sincere thanks for being some of the best humans to observe and admire. Thanks for the moments that have filled my heart with warmth, sharpened my mind, and delighted my spirit. I do ask forgiveness for mistakes of mine.</p>
+        <p>Last, more than a tribe mate, I will remember you as a privilege that I've been blessed enough to have had. For which I shall ever be grateful.</p>
+        <p><em>Varsha</em></p>
+      </div>
+    </div>
+
+    <!-- ─── POETRY ─────────────────────────────────────── -->
+    <div id="panel-poetry" class="panel">
+      <div class="content-body">
+
+        <div class="poem">
+          <div class="poem-title">end before start</div>
+          <div class="poem-body">for me
+you were perfectly imperfect
+for you
+i was imperfectly perfect
+
+with that
+your end, yet again, preceded my start</div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="poem">
+          <div class="poem-title">the middle way</div>
+          <div class="poem-body">nothing to be added
+or to be removed
+is poetry
+
+not too close
+not too far
+is poetry
+
+not on leash
+yet not unleashed
+is poetry
+
+how to be
+and yet how to Not be
+is Poetry
+
+self disappears
+to Appear
+is Poetry</div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="poem">
+          <div class="poem-title">prose and poetry</div>
+          <div class="poem-body">prose is plenty
+poetry is seldom
+
+prose overflows
+poetry just is
+
+prose grounds
+poetry flows
+
+prose is witty
+poetry is beauty
+
+prose happens to be
+poetry is meant to be
+
+prose teaches
+poetry one learns
+
+prose is human
+poetry is Life</div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="poem">
+          <div class="poem-title">child's play</div>
+          <div class="poem-body">Pure souls
+I came across
+love for life
+glistening in
+their eyes
+
+No envy
+or hatred
+neither greed
+nor selfishness
+
+If finding joy
+in little things
+was indeed
+a child's play
+
+Tell me why
+we grow up
+to only give up
+on what was
+our essence
+
+A soul break
+is the price paid
+to earn that quest
+back again
+
+Working hard
+to seek what was
+a child's play
+after all</div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="poem">
+          <div class="poem-title">in the woods</div>
+          <div class="poem-body">In the woods I become alive
+Stories exchanged sans the words
+Silence nursing courage
+To the shy answers within
+In the woods I become alive</div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="poem">
+          <div class="poem-title">autumn</div>
+          <div class="poem-body">O Autumn, here you are
+
+Bringing warmth to sight
+Adding freshness to breath
+
+Bringing in new yet keeping the familiar old
+Showing the beauty in subtle change
+
+Carrying a blanket of comforting golden rays
+Easing us into the next big change
+
+O Autumn, how I wish you overstayed</div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="poem">
+          <div class="poem-title">fall season</div>
+          <div class="poem-body">I may fall
+But as I fall
+I will color the ground
+
+I may fall
+But as I fall
+I will lift up the mood around</div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="poem">
+          <div class="poem-title">broken heart</div>
+          <div class="poem-body">my broken heart
+carries me to a home where I hear
+the shattered hearts
+of other poets
+
+my broken heart
+shows love
+not through words
+rather through tears
+
+my broken heart
+awakens me
+to never let me sleep
+the same sleep again
+
+my broken heart
+feels broken beyond repair
+yet courage seeks me
+to seek love yet again</div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="poem">
+          <div class="poem-title">the stare</div>
+          <div class="poem-body">I know that stare into the void
+feelings devoid
+
+enveloped in a world that dances around
+with all its distinct sight and sound
+yet a blur is all what feels is abound
+
+the storm rages at a sea inside
+numbing senses to not feel the outside
+
+to feel the calm after the storm
+one just needs to Be for the cathartic transform
+
+patiently waiting with all the dare
+for the wave to wash over that into-the-void stare</div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="poem">
+          <div class="poem-title">helpless</div>
+          <div class="poem-body">I never feared the tears
+Only feared them having to roll inwards</div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="poem">
+          <div class="poem-title">memories</div>
+          <div class="poem-body">Farewells are not for heartbreaking goodbyes
+They are for heartwarming welcomes
+Welcoming memories that never change
+Unlike their creators destined for a farewell</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ─── WATERCOLORS ────────────────────────────────── -->
+    <div id="panel-watercolors" class="panel">
+      <div class="content-body">
+        <p class="coming-soon">Coming soon.</p>
+      </div>
+    </div>
+
+    <!-- ─── PHOTOGRAPHY ────────────────────────────────── -->
+    <div id="panel-photography" class="panel">
+      <div class="content-body">
+        <div class="photo-grid">
+
+          <!-- Row 1: Edinburgh big left (8 cols), tree portrait right (4 cols) -->
+          <div class="photo-item" style="grid-column: span 8"
+               onclick="openLight('images/edinburgh.jpeg', 'As if getting lost on one level of street wasn\'t enough, Edinburgh introduced two')">
+            <div class="img-wrap"><img src="images/edinburgh.jpeg" alt="Edinburgh" style="aspect-ratio:16/10"></div>
+            <div class="photo-caption">As if getting lost on one level of street wasn't enough, Edinburgh introduced two</div>
+          </div>
+          <div class="photo-item" style="grid-column: span 4"
+               onclick="openLight('images/insta9.jpg', 'Tree persisted. Fate smiled.')">
+            <div class="img-wrap"><img src="images/insta9.jpg" alt="" style="aspect-ratio:3/4"></div>
+            <div class="photo-caption">Tree persisted. Fate smiled.</div>
+          </div>
+
+          <!-- Row 2: three equal columns -->
+          <div class="photo-item" style="grid-column: span 4"
+               onclick="openLight('images/blossom.jpeg', '')">
+            <div class="img-wrap"><img src="images/blossom.jpeg" alt="Blossom" style="aspect-ratio:1/1"></div>
+            <div class="photo-caption">&nbsp;</div>
+          </div>
+          <div class="photo-item" style="grid-column: span 4"
+               onclick="openLight('images/insta6.jpg', 'This one is without a filter; the way Buddha would have seen')">
+            <div class="img-wrap"><img src="images/insta6.jpg" alt="" style="aspect-ratio:1/1"></div>
+            <div class="photo-caption">This one is without a filter; the way Buddha would have seen</div>
+          </div>
+          <div class="photo-item" style="grid-column: span 4"
+               onclick="openLight('images/insta8.jpg', '30,000 feet can offer more than an overview.')">
+            <div class="img-wrap"><img src="images/insta8.jpg" alt="" style="aspect-ratio:1/1"></div>
+            <div class="photo-caption">30,000 feet can offer more than an overview.</div>
+          </div>
+
+          <!-- Row 3: museum small left (5), Portland wide right (7) -->
+          <div class="photo-item" style="grid-column: span 5"
+               onclick="openLight('images/insta4.jpg', 'This unique museum without labels is meta art and Isabella Stewart Gardner was a genius.')">
+            <div class="img-wrap"><img src="images/insta4.jpg" alt="" style="aspect-ratio:4/5"></div>
+            <div class="photo-caption">This unique museum without labels is meta art and Isabella Stewart Gardner was a genius.</div>
+          </div>
+          <div class="photo-item" style="grid-column: span 7"
+               onclick="openLight('images/portland.jpeg', 'Dear Portland, Here is what I learnt from you. Your Japanese garden is full of juxtapositions. Shade with sunlight; green with white; rigidity of rocks with fluidity of water; presence with absence; form with emptiness. The differences created meaning.')">
+            <div class="img-wrap"><img src="images/portland.jpeg" alt="Portland" style="aspect-ratio:4/3"></div>
+            <div class="photo-caption">Dear Portland, here is what I learnt from you. Your Japanese garden is full of juxtapositions. Shade with sunlight; green with white; rigidity of rocks with fluidity of water; presence with absence; form with emptiness. The differences created meaning. None of the juxtapositions felt forcefully designed; rather they felt subtly discovered.</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── DIGITAL ILLUSTRATIONS ─────────────────────── -->
+    <div id="panel-digital" class="panel">
+      <div class="content-body">
+        <p class="coming-soon">Coming soon.</p>
+      </div>
+    </div>
+
+    <!-- ─── PHYSICAL COMPUTING ────────────────────────── -->
+    <div id="panel-physical" class="panel">
+      <div class="content-body">
+        <div class="video-item">
+          <iframe src="https://www.youtube.com/embed/S5BoYQRSBSM" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          <div class="video-caption">Arduino powered clocks that tell the electricity consumption story</div>
+        </div>
+        <div class="video-item">
+          <iframe src="https://www.youtube.com/embed/iG_P3y6wfoQ" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          <div class="video-caption">Arduino powered minions crossing hurdles and teaching children geometric shapes along the way</div>
+        </div>
+        <div class="video-item">
+          <iframe src="https://www.youtube.com/embed/MEw52eA7aCU" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          <div class="video-caption">Using augmented reality to make learning orthographic projections fun</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── HOMELY CURATION ───────────────────────────── -->
+    <div id="panel-homely" class="panel">
+      <div class="content-body">
+        <p class="coming-soon">Coming soon.</p>
+      </div>
+    </div>
+
+    <!-- ─── COOKING ───────────────────────────────────── -->
+    <div id="panel-cooking" class="panel">
+      <div class="content-body">
+        <p class="coming-soon">Coming soon.</p>
+      </div>
+    </div>
+
+    <!-- ─── INSPIRATIONS ──────────────────────────────── -->
+    <div id="panel-inspirations" class="panel">
+      <div class="content-body">
+        <h5>anything under the sun that has inspired me</h5>
+        <p>
+          Bill Watterson<br>
+          Hayao Miyazaki<br>
+          The Boy and the Heron<br>
+          Spirited Away<br>
+        </p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Lightbox -->
+  <div id="lightbox" onclick="closeLight()">
+    <div id="lightbox-close" onclick="closeLight()">✕</div>
+    <img id="lightbox-img" src="" alt="">
+    <div id="lightbox-caption"></div>
+  </div>
+
+  <script>
+
+    /* ── Panel switching ─────────────────────────────── */
+    let currentPanel = 'default';
+
+    // Map each sub-panel id to its parent toggle id
+    const parentMap = {
+      'case-redesign':     'toggle-cases',
+      'case-research':     'toggle-cases',
+      'article-mentoring': 'toggle-articles',
+      'article-hcd':       'toggle-articles',
+      'prose-farewell':    'toggle-prose',
+    };
+
+    function show(id) {
+      // hide current
+      document.getElementById('panel-' + currentPanel).classList.remove('active');
+
+      // deactivate all nav links and toggles
+      document.querySelectorAll('.nav-link, .nav-expand-toggle').forEach(el => el.classList.remove('active'));
+
+      // show new panel
+      currentPanel = id;
+      const panel = document.getElementById('panel-' + id);
+      if (panel) panel.classList.add('active');
+
+      // activate matching nav link
+      document.querySelectorAll('.nav-link, .nav-expand-toggle').forEach(el => {
+        if (el.getAttribute('onclick') && el.getAttribute('onclick').includes(`'${id}'`)) {
+          el.classList.add('active');
+        }
+      });
+
+      // also activate parent toggle if this is a sub-item
+      if (parentMap[id]) {
+        document.getElementById(parentMap[id]).classList.add('active');
+      }
+
+      // scroll content to top
+      document.getElementById('content').scrollTo(0, 0);
+    }
+
+    /* ── Expandable nav sections ─────────────────────── */
+    const expandableIds = ['cases', 'articles', 'prose'];
+
+    function toggleExpand(id) {
+      const isOpen = document.getElementById('sub-' + id).classList.contains('open');
+
+      // close all sections first
+      expandableIds.forEach(eid => {
+        document.getElementById('toggle-' + eid).classList.remove('open');
+        document.getElementById('sub-'    + eid).classList.remove('open');
+      });
+
+      // if it wasn't open, open it now (click on open = collapse only)
+      if (!isOpen) {
+        document.getElementById('toggle-' + id).classList.add('open');
+        document.getElementById('sub-'    + id).classList.add('open');
+      }
+
+      // turn the parent green immediately on click
+      document.querySelectorAll('.nav-link, .nav-expand-toggle').forEach(el => el.classList.remove('active'));
+      if (!isOpen) document.getElementById('toggle-' + id).classList.add('active');
+    }
+    function toggleCases() { toggleExpand('cases'); }
+
+    /* ── Lightbox ────────────────────────────────────── */
+    function openLight(src, caption) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox-caption').textContent = caption;
+      document.getElementById('lightbox').classList.add('open');
+    }
+    function closeLight() {
+      document.getElementById('lightbox').classList.remove('open');
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLight(); });
+
+    /* ── Hash router — open panel from URL hash ──────── */
+    // Which expandable parent to open for a given panel id
+    const expandParent = {
+      'case-redesign':     'cases',
+      'case-research':     'cases',
+      'article-mentoring': 'articles',
+      'article-hcd':       'articles',
+      'prose-farewell':    'prose',
+    };
+
+    function routeHash() {
+      const hash = window.location.hash.replace('#', '');
+      if (!hash) return;
+
+      // open parent expandable if needed
+      if (expandParent[hash]) {
+        const pid = expandParent[hash];
+        document.getElementById('toggle-' + pid).classList.add('open');
+        document.getElementById('sub-' + pid).classList.add('open');
+      }
+      // also open parent if the hash IS an expandable (e.g. #prose)
+      const subEl = document.getElementById('sub-' + hash);
+      if (subEl) {
+        document.getElementById('toggle-' + hash).classList.add('open');
+        subEl.classList.add('open');
+      }
+
+      show(hash);
+    }
+
+    // Run on load
+    routeHash();
+
+  </script>
+
+</body>
+</html>
