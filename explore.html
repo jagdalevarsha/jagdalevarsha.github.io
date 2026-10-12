@@ -339,16 +339,16 @@
        LEFT NAV
   ══════════════════════════════════════════ -->
   <nav id="nav">
-    <a href="exploration-anim-4.html" style="text-decoration:none; color:inherit;">
+    <a href="index.html" style="text-decoration:none; color:inherit;">
       <h4>cd varsha/mind</h4>
     </a>
-    <a href="exploration-anim-4.html" style="display:block; font-size:0.78rem; font-weight:300; color:#3aabbd; text-decoration:underline; text-underline-offset:2px; margin-bottom:1.6rem; margin-top:0.25rem; transition:color 0.15s;">← home</a>
+    <a href="index.html" style="display:block; font-size:0.78rem; font-weight:300; color:#3aabbd; text-decoration:underline; text-underline-offset:2px; margin-bottom:1.6rem; margin-top:0.25rem; transition:color 0.15s;">← home</a>
 
     <div class="nav-section">
       <div class="nav-section-label">cd professional</div>
 
-      <!-- Case studies — expandable -->
-      <div class="nav-expandable">
+      <!-- Case studies — hidden: no content yet -->
+      <div class="nav-expandable" style="display:none;">
         <div class="nav-expand-toggle" id="toggle-cases" onclick="toggleExpand('cases')">
           /case studies <span class="expand-arrow">▶</span>
         </div>
@@ -366,10 +366,12 @@
         <div class="nav-sub" id="sub-articles">
           <a class="nav-link" onclick="show('article-mentoring')">/mentoring a ux intern</a>
           <a class="nav-link" onclick="show('article-hcd')">/human centred design</a>
-          <a class="nav-link" style="color:#ccc; cursor:default">/talk placeholder</a>
+          <!-- hidden: no content yet -->
+          <a class="nav-link" style="display:none;">/talk placeholder</a>
         </div>
       </div>
-      <a class="nav-link" onclick="show('community')">/community contributions</a>
+      <!-- hidden: no content yet -->
+      <a class="nav-link" style="display:none;" onclick="show('community')">/community contributions</a>
     </div>
 
     <div class="nav-section">
@@ -381,18 +383,22 @@
         </div>
         <div class="nav-sub" id="sub-prose">
           <a class="nav-link" onclick="show('prose-farewell')">/farewell to vmware</a>
-          <a class="nav-link" style="color:#ccc; cursor:default">/debate to learn better</a>
-          <a class="nav-link" style="color:#ccc; cursor:default">/write before clarity</a>
-          <a class="nav-link" style="color:#ccc; cursor:default">/discover yourself</a>
+          <a class="nav-link" href="https://medium.com/@varshajagdale/how-to-debate-to-learn-better-3e8808a1d2e3" target="_blank">/debate to learn better</a>
+          <a class="nav-link" href="https://medium.com/@varshajagdale/write-before-having-clarity-38e953f8cbaa" target="_blank">/write before clarity</a>
+          <a class="nav-link" href="https://medium.com/@varshajagdale/to-discover-self-or-not-979239410590" target="_blank">/discover yourself</a>
         </div>
       </div>
       <a class="nav-link" onclick="show('poetry')">/poetry</a>
-      <a class="nav-link" onclick="show('watercolors')">/watercolors</a>
+      <!-- hidden: no content yet -->
+      <a class="nav-link" style="display:none;" onclick="show('watercolors')">/watercolors</a>
       <a class="nav-link" onclick="show('photography')">/photography</a>
-      <a class="nav-link" onclick="show('digital')">/digital illustrations</a>
+      <!-- hidden: no content yet -->
+      <a class="nav-link" style="display:none;" onclick="show('digital')">/digital illustrations</a>
       <a class="nav-link" onclick="show('physical')">/physical computing</a>
-      <a class="nav-link" onclick="show('homely')">/homely curation</a>
-      <a class="nav-link" onclick="show('cooking')">/cooking</a>
+      <!-- hidden: no content yet -->
+      <a class="nav-link" style="display:none;" onclick="show('homely')">/homely curation</a>
+      <!-- hidden: no content yet -->
+      <a class="nav-link" style="display:none;" onclick="show('cooking')">/cooking</a>
       <a class="nav-link" onclick="show('inspirations')">/inspirations</a>
     </div>
 
@@ -464,8 +470,7 @@
       <div class="content-body">
         <h5>How to mentor a UX intern</h5>
         <p style="font-size:0.75rem; color:#aaa; margin-bottom:1.6rem">Medium · VMware Design</p>
-        <p>[ placeholder — paste full article text here ]</p>
-        <p><a href="https://medium.com/vmwaredesign/what-i-learned-from-mentoring-a-ux-intern-f9b4c087f4d4" target="_blank" style="font-size:0.8rem; color:#888">read on Medium →</a></p>
+        <p><a href="https://medium.com/vmwaredesign/what-i-learned-from-mentoring-a-ux-intern-f9b4c087f4d4" target="_blank" style="font-size:0.88rem; color:#333">read on Medium →</a></p>
       </div>
     </div>
 
@@ -474,8 +479,7 @@
       <div class="content-body">
         <h5>Life skills learnt from human centred design</h5>
         <p style="font-size:0.75rem; color:#aaa; margin-bottom:1.6rem">Medium</p>
-        <p>[ placeholder — paste full article text here ]</p>
-        <p><a href="https://medium.com/@varshajagdale/what-human-centred-design-taught-me-about-life-602f66d95066" target="_blank" style="font-size:0.8rem; color:#888">read on Medium →</a></p>
+        <p><a href="https://medium.com/@varshajagdale/what-human-centred-design-taught-me-about-life-602f66d95066" target="_blank" style="font-size:0.88rem; color:#333">read on Medium →</a></p>
       </div>
     </div>
 
@@ -501,19 +505,19 @@
             <a href="https://medium.com/@varshajagdale/how-to-debate-to-learn-better-3e8808a1d2e3" target="_blank">
               Debate to learn better →
             </a>
-            <span class="link-meta">Medium · [ placeholder for full text ]</span>
+            <span class="link-meta">Medium</span>
           </li>
           <li>
             <a href="https://medium.com/@varshajagdale/write-before-having-clarity-38e953f8cbaa" target="_blank">
               Write before having clarity →
             </a>
-            <span class="link-meta">Medium · [ placeholder for full text ]</span>
+            <span class="link-meta">Medium</span>
           </li>
           <li>
             <a href="https://medium.com/@varshajagdale/to-discover-self-or-not-979239410590" target="_blank">
               Discover your true self →
             </a>
-            <span class="link-meta">Medium · [ placeholder for full text ]</span>
+            <span class="link-meta">Medium</span>
           </li>
         </ul>
       </div>
